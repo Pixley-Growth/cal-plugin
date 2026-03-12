@@ -1,12 +1,14 @@
 ---
+name: cal-save
 description: "Context preservation - route learnings to cal.md (permanent) or memories/ (ephemeral)"
-argument: "type content - Save type (delta, aha, memory, decision, session) and content to preserve"
-allowed_tools: ["Read", "Write", "Edit", "Bash"]
+argument-hint: "type content - Save type (delta, aha, memory, decision, session) and content to preserve"
 ---
 
 # Save — Context Preservation
 
 **Purpose:** Preserve learnings and context with appropriate routing.
+
+Arguments provided: $ARGUMENTS
 
 ## Core Principle
 

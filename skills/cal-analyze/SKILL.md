@@ -1,7 +1,7 @@
 ---
+name: cal-analyze
 description: "Deep investigation with 7 analysis modes. Usage: /cal:analyze [mode] [subject]. Modes: inside-out, cake-walk, rubberneck, burst, bisect, trace, diff-audit."
-argument: "mode subject (optional) - Analysis mode (inside-out, cake-walk, rubberneck, burst, bisect, trace, diff-audit) and subject to investigate"
-allowed_tools: ["Read", "Write", "Edit", "Glob", "Grep", "Task", "AskUserQuestion", "Bash"]
+argument-hint: "mode subject (optional) - Analysis mode and subject to investigate"
 ---
 
 # Analyze — Deep Investigation
@@ -24,12 +24,12 @@ allowed_tools: ["Read", "Write", "Edit", "Glob", "Grep", "Task", "AskUserQuestio
 
 ### 1. Mode Selection
 
-If no mode specified:
+If no mode specified in `$ARGUMENTS`:
 1. Read the user's problem description
 2. Suggest the best mode with rationale
 3. Wait for user confirmation before proceeding
 
-If mode specified:
+If mode specified in `$ARGUMENTS`:
 1. Load the protocol for that mode from `cal/analysis.md`
 2. Begin execution immediately
 

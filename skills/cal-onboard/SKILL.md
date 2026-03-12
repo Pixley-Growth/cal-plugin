@@ -1,6 +1,6 @@
 ---
+name: cal-onboard
 description: "Project setup - scan codebase, create Cal structure, generate or improve CLAUDE.md"
-allowed_tools: ["Read", "Write", "Edit", "Glob", "Grep", "AskUserQuestion", "Bash"]
 ---
 
 # Onboard — Project Setup
