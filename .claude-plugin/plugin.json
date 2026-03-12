@@ -1,7 +1,8 @@
 {
   "name": "cal",
-  "description": "Cal's recalibration toolkit. Protocols for when things go sideways.",
-  "version": "3.5.0",
+  "description": "Object-oriented coordinator — manages pipelines, dispatches agents, enforces OOD",
+  "version": "3.6.0",
+  "license": "MIT",
   "author": {
     "name": "Cal"
   }

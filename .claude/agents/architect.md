@@ -17,6 +17,7 @@ description: |
   user: "Evaluate this system design"
   assistant: [Launches architect agent]
   </example>
+maxTurns: 10
 model: opus
 tools:
   - Read

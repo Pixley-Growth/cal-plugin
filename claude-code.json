@@ -1,21 +1,33 @@
 {
   "name": "cal",
-  "version": "3.5.0",
-  "description": "Object-oriented coordinator — manages pipelines, dispatches agents, enforces OOD",
-  "author": "Cal",
-  "license": "MIT",
+  "version": "3.6.0",
   "commands": [
-    "./commands/analyze.md",
-    "./commands/check.md",
-    "./commands/meet.md",
-    "./commands/next.md",
-    "./commands/onboard.md",
-    "./commands/save.md"
+    "./commands/check.md"
   ],
   "skills": [
     {
       "name": "cal-ood",
       "description": "Object-Oriented Data principles, violation patterns, and compliance test. Use when reviewing code for OOD compliance, designing domain objects, checking for scattered logic in utils/helpers/services, or when user mentions object-oriented data, domain modeling, or translation boundaries."
+    },
+    {
+      "name": "cal-analyze",
+      "description": "Deep investigation with 7 analysis modes (inside-out, cake-walk, rubberneck, burst, bisect, trace, diff-audit)"
+    },
+    {
+      "name": "cal-meet",
+      "description": "Virtual meeting coordinator - collaborative thinking with AI agents"
+    },
+    {
+      "name": "cal-next",
+      "description": "Advance the pipeline - find and execute next step"
+    },
+    {
+      "name": "cal-onboard",
+      "description": "Project setup - scan codebase, create Cal structure, generate or improve CLAUDE.md"
+    },
+    {
+      "name": "cal-save",
+      "description": "Context preservation - route learnings to cal.md (permanent) or memories/ (ephemeral)"
     }
   ]
 }

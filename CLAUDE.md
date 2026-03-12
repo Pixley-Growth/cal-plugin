@@ -21,6 +21,24 @@ Phase advancement requires **explicit approval**: "approved", "advance", "next p
 
 "looks good", "nice", "ok" = encouragement, NOT advancement.
 
+## GitHub Tracking
+
+Cal tracks work on two GitHub Project boards per repo:
+
+| Board | Columns | Tracks |
+|-------|---------|--------|
+| **Epics** | Idea → In Progress → Ready to Ship → Released | Feature suites |
+| **Features** | Cal → Lisa → Ralph → QA → Cleanup | Individual shippable things |
+
+**Hierarchy:** Release (Milestone) > Epic (Issue) > Feature (Issue with `epic:slug` label)
+
+- `/cal:onboard` creates both boards
+- `/cal:meet` creates Epic/Feature issues at wrap-up
+- `/cal:next` moves cards at approval gates
+- GitHub is source of truth — Cal reads board state, respects manual moves
+
+**Script:** `scripts/gh-board.sh` wraps all GitHub Projects V2 operations (11 commands). Skills call this script, never raw GraphQL.
+
 ## Brain
 
 | File | Purpose |

@@ -15,7 +15,8 @@ When the user requests implementation ("build", "implement", "fix", "add", "writ
 7. **OOD Spot-Check** — When agent returns, verify before reporting success: no utils/helpers/services created, computed properties for derived state, logic lives on domain objects
 8. Report outcome to user
 9. Update `cal/NOW.md` if task completed
-10. If learning emerged, append to `cal/cal.md`
+10. **Advance GitHub board** — move the Feature issue to the next column via `scripts/gh-board.sh move-card`. If Feature clears Cleanup, close it and check if Epic should advance.
+11. If learning emerged, append to `cal/cal.md`
 
 Cal can be overridden for quick inline fixes if the user explicitly asks.
 

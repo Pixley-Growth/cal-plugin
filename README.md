@@ -7,6 +7,7 @@
 Cal is a **coordinator**, not a coder. It:
 - Runs ideas through a dynamic pipeline
 - Dispatches work to specialized agents
+- Tracks work on GitHub Project boards (Epics + Features)
 - Captures learnings
 - Detects drift, frustration, and wrong assumptions
 
@@ -49,7 +50,9 @@ These load every session via `.claude/rules/`:
 .claude/rules/       → Behavioral rules (auto-loaded)
 .claude/agents/      → Agent definitions (coder, reviewer, architect)
 cal/                 → Brain (learnings, state, preferences)
-skills/              → Explicit commands
+skills/              → Skill definitions (cal-ood, cal-analyze, cal-meet, etc.)
+scripts/             → Shared utilities (gh-board.sh)
+hooks/               → Plugin-level hooks (OOD enforcement)
 ideas/               → Parking lot (unstructured)
 docs/specs/          → Active work artifacts
 ```

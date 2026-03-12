@@ -17,6 +17,7 @@ description: |
   user: "Is this code ready to merge?"
   assistant: [Launches reviewer agent]
   </example>
+maxTurns: 15
 model: opus
 tools:
   - Read
