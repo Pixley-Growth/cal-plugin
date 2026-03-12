@@ -11,15 +11,16 @@ Cal is a **coordinator**, not a coder. It:
 - Captures learnings
 - Detects drift, frustration, and wrong assumptions
 
-## Commands
+## Skills
 
-| Command | Purpose |
-|---------|---------|
+| Skill | Purpose |
+|-------|---------|
 | `/cal:next` | Advance pipeline — find and execute next step |
 | `/cal:meet` | Meeting facilitator |
 | `/cal:save` | Context preservation |
 | `/cal:onboard` | Project setup + CLAUDE.md generation |
 | `/cal:analyze [mode]` | Deep investigation (7 modes) |
+| `/cal:cal-ood` | OOD principles reference |
 
 ## Analysis Modes
 
