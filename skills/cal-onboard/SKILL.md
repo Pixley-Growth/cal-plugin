@@ -128,7 +128,26 @@ Based on detected patterns:
 | Large codebase | atomizer | Extraction and size limits |
 | Security-sensitive | security-auditor | Security scanning |
 
-### 7. User Profile (Optional)
+### 7. GitHub Project Boards
+
+Create the two tracking boards on the repo's GitHub Project:
+
+```bash
+scripts/gh-board.sh ensure-boards
+```
+
+This creates:
+- **Epics** board with columns: Idea, In Progress, Ready to Ship, Released
+- **Features** board with columns: Cal, Lisa, Ralph, QA, Cleanup
+
+If boards already exist, this is a no-op. If `gh` CLI is not authenticated or no remote exists, warn and skip — boards are optional for Cal to function.
+
+Report board status:
+- `Boards: created Epics, Features` (new)
+- `Boards: already exist` (idempotent)
+- `Boards: skipped (gh not configured)` (graceful failure)
+
+### 8. User Profile (Optional)
 
 Offer to set up a user profile at `~/.claude/cal/USER-PROFILE.md`:
 - Professional background
@@ -155,5 +174,6 @@ After onboarding:
 **Created:** [list of new files]
 **CLAUDE.md:** [generated / improved / unchanged]
 **Agents:** [list]
+**Boards:** [created / already exist / skipped]
 **Next:** Run /cal:next to start working
 ```

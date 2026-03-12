@@ -65,6 +65,28 @@ When wrapping up:
 2. Save to `cal/memories/YYYY-MM-DD.md` under `## Meeting: [Topic]`
 3. Present summary for user review
 4. Ask: "Any decisions here need protection?" (if yes, extract to `cal/cal.md`)
+5. **Create GitHub ticket** (see section below)
+
+### 6. GitHub Ticket Creation
+
+After saving meeting minutes, create a GitHub ticket for the work discussed:
+
+1. **Ask: "Is this an Epic or Feature?"**
+
+2. **If Epic:**
+   - Ask: "Which Release does this belong to?" — list existing milestones via `scripts/gh-board.sh list-epics-for-milestone` or offer to create a new one via `scripts/gh-board.sh create-milestone "<title>"`
+   - Create the Epic issue: `scripts/gh-board.sh create-issue "<title>" "<one-liner summary>" "type:epic"`
+   - Set milestone: `scripts/gh-board.sh set-milestone-on-issue <number> "<milestone>"`
+   - Place on board: `scripts/gh-board.sh move-card <number> "Epics" "Idea"`
+   - Report: "Created Epic #N: <title> on Epics board → Idea"
+
+3. **If Feature:**
+   - Ask: "Which Epic does this belong to?" — list existing Epics via `gh issue list --label type:epic`
+   - Create the Feature issue: `scripts/gh-board.sh create-issue "<title>" "<one-liner summary>" "type:feature,epic:<slug>"`
+   - Place on board: `scripts/gh-board.sh move-card <number> "Features" "Cal"`
+   - Report: "Created Feature #N: <title> on Features board → Cal"
+
+4. **If `gh` is not configured**, warn and skip. The meeting still completes normally.
 
 ## Meeting Minutes Template
 

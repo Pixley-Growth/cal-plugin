@@ -1,0 +1,40 @@
+{
+  "feature": "github-tickets",
+  "title": "GitHub Project Board Integration for Cal",
+  "date": "2026-03-11",
+  "status": "ready",
+  "phases": [
+    {
+      "id": 1,
+      "name": "Shell Script Foundation",
+      "status": "pending",
+      "stories": ["US-6"]
+    },
+    {
+      "id": 2,
+      "name": "Onboard Integration",
+      "status": "pending",
+      "stories": ["US-1"]
+    },
+    {
+      "id": 3,
+      "name": "Meet Integration",
+      "status": "pending",
+      "stories": ["US-2", "US-3"]
+    },
+    {
+      "id": 4,
+      "name": "Next Integration",
+      "status": "pending",
+      "stories": ["US-4", "US-5"]
+    }
+  ],
+  "stories": [
+    {"id": "US-1", "title": "Board Setup via Onboard"},
+    {"id": "US-2", "title": "Create Feature from Meet"},
+    {"id": "US-3", "title": "Create Epic from Meet"},
+    {"id": "US-4", "title": "Advance Feature via Next"},
+    {"id": "US-5", "title": "Feature Auto-Close and Epic Advancement"},
+    {"id": "US-6", "title": "Shell Script Wrapper"}
+  ]
+}

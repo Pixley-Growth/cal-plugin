@@ -59,6 +59,38 @@ When a phase completes, Cal:
 1. Summarizes what was done
 2. Asks for explicit approval to advance
 3. On approval: commits artifacts, updates `cal/NOW.md`
+4. **Advances GitHub ticket** (see section below)
+
+## GitHub Board Advancement
+
+At every approval gate, Cal advances the Feature issue on the GitHub board:
+
+1. **Read current column** from GitHub (source of truth):
+   ```bash
+   scripts/gh-board.sh get-card-column <issue-number> "Features"
+   ```
+
+2. **Move to next column** matching the new phase (name-matched):
+   ```bash
+   scripts/gh-board.sh move-card <issue-number> "Features" "<column>"
+   ```
+   Phase-to-column mapping: Cal→Lisa, Lisa→Ralph, Ralph→QA, QA→Cleanup
+
+3. **If Feature clears Cleanup**, close the issue:
+   ```bash
+   scripts/gh-board.sh close-issue <issue-number>
+   ```
+
+4. **Check Epic status** after closing a Feature:
+   - List remaining Features: `scripts/gh-board.sh list-features-for-epic <epic-slug>`
+   - If the first Feature just entered the board, move Epic to "In Progress":
+     `scripts/gh-board.sh move-card <epic-number> "Epics" "In Progress"`
+   - If all Features are closed, move Epic to "Ready to Ship":
+     `scripts/gh-board.sh move-card <epic-number> "Epics" "Ready to Ship"`
+
+5. **If `gh` is not configured**, warn and skip. Pipeline still advances normally.
+
+Report board movement in the status output: `**Board:** Moved #N to [column]`
 
 ## Update State
 
@@ -75,6 +107,7 @@ After each advancement:
 **Phase:** [current phase]
 **Action taken:** [what was done]
 **Gate:** [passed / pending approval]
+**Board:** [Moved #N to column / skipped]
 **Next:** [what happens next]
 ```
 

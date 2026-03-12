@@ -1,0 +1,10 @@
+Feature: github-tickets
+Spec: docs/specs/github-tickets.md
+Date: 2026-03-11
+
+Phase 1: Shell Script Foundation [DONE]
+Phase 2: Onboard Integration [DONE]
+Phase 3: Meet Integration [DONE]
+Phase 4: Next Integration [DONE]
+
+Status: All phases implemented. Pending verification (gh auth needs project scope).
