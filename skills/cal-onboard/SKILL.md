@@ -62,6 +62,7 @@ Generate a lean CLAUDE.md applying the principles above:
 - Project name (one line)
 - Non-obvious build/test/lint commands (only if not discoverable from package.json/Makefile)
 - Cal plugin commands table
+- GitHub tracking section (hierarchy, boards, `scripts/gh-board.sh`)
 - Approval gates
 - Brain file pointers
 - Any project-specific decisions that have no code signal
@@ -70,8 +71,9 @@ Generate a lean CLAUDE.md applying the principles above:
 Offer to audit it:
 1. Read the existing CLAUDE.md
 2. Apply the litmus test to every line
-3. Present findings: "These N lines pass the test. These M lines could be cut because [reason]."
-4. Ask user: "Want me to trim it, suggest improvements, or leave it as-is?"
+3. Check for missing Cal sections (skills, brain, team, GitHub tracking)
+4. Present findings: "These N lines pass the test. These M lines could be cut because [reason]."
+5. Ask user: "Want me to trim it, suggest improvements, or leave it as-is?"
 
 Present suggestions to user for approval. Do not overwrite without confirmation.
 
