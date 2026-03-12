@@ -173,25 +173,30 @@ setup_columns() {
   local field_id
   field_id=$(get_status_field_id "$project_id")
 
-  # Build the full options array
-  local options_json="["
+  # Color cycle for columns
+  local colors=("GRAY" "BLUE" "ORANGE" "YELLOW" "GREEN" "PURPLE" "PINK" "RED")
+
+  # Build GraphQL input array (unquoted keys, color + description required)
+  local options_gql="["
   local first=true
+  local i=0
   for col in "${columns[@]}"; do
     if [ "$first" = true ]; then
       first=false
     else
-      options_json+=","
+      options_gql+=","
     fi
-    options_json+="{\"name\":\"${col}\"}"
+    local color="${colors[$((i % ${#colors[@]}))]}"
+    options_gql+="{name:\"${col}\",color:${color},description:\"\"}"
+    i=$((i + 1))
   done
-  options_json+="]"
+  options_gql+="]"
 
   gh api graphql -f query="
     mutation {
       updateProjectV2Field(input: {
-        projectId: \"${project_id}\",
         fieldId: \"${field_id}\",
-        singleSelectOptions: ${options_json}
+        singleSelectOptions: ${options_gql}
       }) {
         projectV2Field {
           ... on ProjectV2SingleSelectField {
