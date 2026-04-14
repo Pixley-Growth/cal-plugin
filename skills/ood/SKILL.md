@@ -1,5 +1,5 @@
 ---
-name: cal-ood
+name: ood
 description: "Object-Oriented Data principles, violation patterns, and compliance test. Use when reviewing code for OOD compliance, designing domain objects, checking for scattered logic in utils/helpers/services, or when user mentions object-oriented data, domain modeling, or translation boundaries."
 license: MIT
 compatibility: "Claude Code CLI with cal-plugin installed"

@@ -1,5 +1,5 @@
 ---
-name: cal-onboard
+name: onboard
 description: "Project setup - scan codebase, create Cal structure, generate or improve CLAUDE.md"
 ---
 
@@ -39,41 +39,20 @@ Report what was detected:
 
 ### 2. CLAUDE.md Generation
 
-#### CLAUDE.md Writing Principles
-
-Every line must pass this test: **"Would removing this cause Claude to make mistakes?"**
-
-**Include (decisions Claude can't reverse-engineer):**
-- Style choices invisible in the codebase ("Use ES modules, not CommonJS")
-- Boundaries with no code signal ("Don't touch /legacy")
-- Workflow restrictions ("Run single tests, not the full suite")
-- Approval/process gates with non-obvious semantics
-
-**Exclude (noise that dilutes real instructions):**
-- Standard language conventions Claude already knows
-- How systems work (Claude can read the code)
-- API documentation (link to it instead)
-- Aspirational statements ("Write clean code", "Follow best practices")
-
-**The bar:** If Claude could figure it out by reading your files, it doesn't belong in CLAUDE.md. The file should feel uncomfortably short.
-
 **If CLAUDE.md does not exist:**
-Generate a lean CLAUDE.md applying the principles above:
-- Project name (one line)
-- Non-obvious build/test/lint commands (only if not discoverable from package.json/Makefile)
-- Cal plugin commands table
-- GitHub tracking section (hierarchy, boards, `scripts/gh-board.sh`)
-- Approval gates
-- Brain file pointers
-- Any project-specific decisions that have no code signal
+Generate an optimized CLAUDE.md with:
+- Project name and description
+- Detected stack and frameworks
+- Build/test/lint commands (detected from package.json, Makefile, etc.)
+- Cal plugin configuration (commands table, brain files, team reference)
+- @imports for cal/ reference files
 
 **If CLAUDE.md exists:**
-Offer to audit it:
-1. Read the existing CLAUDE.md
-2. Apply the litmus test to every line
-3. Check for missing Cal sections (skills, brain, team, GitHub tracking)
-4. Present findings: "These N lines pass the test. These M lines could be cut because [reason]."
-5. Ask user: "Want me to trim it, suggest improvements, or leave it as-is?"
+Scan it and suggest improvements:
+- Missing build commands
+- Stale references
+- Missing Cal sections (commands, brain, team)
+- Opportunities for @imports
 
 Present suggestions to user for approval. Do not overwrite without confirmation.
 
@@ -110,7 +89,6 @@ Create `.claude/rules/` with Cal behavioral rules if they don't exist:
 - `tone-awareness.md` — Frustration/joy detection
 - `squirrel.md` — Drift/scope creep detection
 - `delta.md` — Wrong assumption detection
-- `ood.md` — OOD violation detection
 
 ### 5. Create Agent Definitions
 

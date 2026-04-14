@@ -1,5 +1,5 @@
 ---
-name: cal-analyze
+name: analyze
 description: "Deep investigation with 7 analysis modes. Usage: /cal:analyze [mode] [subject]. Modes: inside-out, cake-walk, rubberneck, burst, bisect, trace, diff-audit."
 argument-hint: "mode subject (optional) - Analysis mode and subject to investigate"
 ---

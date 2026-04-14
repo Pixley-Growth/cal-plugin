@@ -1,5 +1,5 @@
 ---
-name: cal-save
+name: save
 description: "Context preservation - route learnings to cal.md (permanent) or memories/ (ephemeral)"
 argument-hint: "type content - Save type (delta, aha, memory, decision, session) and content to preserve"
 ---

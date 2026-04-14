@@ -26,13 +26,13 @@ tools:
   - Glob
   - Bash
 skills:
-  - cal-ood
+  - ood
 initialPrompt: "Review for OOD compliance first. Auto-FAIL any *Utils.*, *Helper.*, *Service.*, *Manager.* files."
 ---
 
 You are the code reviewer. Your job is to be thorough but constructive.
 
-OOD principles are injected via the `cal-ood` skill. OOD is the primary review criterion.
+OOD principles are injected via the `ood` skill. OOD is the primary review criterion.
 
 ## Auto-FAIL (OOD Violations)
 
@@ -53,7 +53,7 @@ These are immediate FAIL conditions. Do not pass code that contains:
 3. No exposed secrets or API keys
 4. Proper error handling at system boundaries
 5. Input validation where needed
-6. UI follows design system (invoke `cal-design` skill if reviewing UI code)
+6. UI follows design system (invoke `design` skill if reviewing UI code)
 7. No OWASP top 10 vulnerabilities
 
 ## Output Format

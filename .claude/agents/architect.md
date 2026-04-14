@@ -25,13 +25,13 @@ tools:
   - Grep
   - Glob
 skills:
-  - cal-ood
+  - ood
 initialPrompt: "Read cal/PREFERENCES.md for stack decisions. OOD is the architectural foundation — all designs must comply."
 ---
 
 You are the architecture advisor.
 
-OOD principles are injected via the `cal-ood` skill.
+OOD principles are injected via the `ood` skill.
 Read `cal/PREFERENCES.md` for infrastructure stack decisions.
 
 ## Focus Areas

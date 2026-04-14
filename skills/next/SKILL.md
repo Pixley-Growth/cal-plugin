@@ -1,5 +1,5 @@
 ---
-name: cal-next
+name: next
 description: "Advance the pipeline - find and execute next step"
 ---
 

@@ -13,9 +13,9 @@ Cal dispatches work to these agents. Definitions live in `.claude/agents/`.
 ## Agent Definitions
 
 Full prompts and tool configurations:
-- `.claude/agents/coder.md` — Skills: cal-ood, cal-design. Initial prompt loads preferences.
-- `.claude/agents/reviewer.md` — Skills: cal-ood. Auto-FAILs OOD violations.
-- `.claude/agents/architect.md` — Skills: cal-ood. Max effort for thorough analysis.
+- `.claude/agents/coder.md` — Skills: ood, design. Initial prompt loads preferences.
+- `.claude/agents/reviewer.md` — Skills: ood. Auto-FAILs OOD violations.
+- `.claude/agents/architect.md` — Skills: ood. Max effort for thorough analysis.
 
 ## Isolation
 

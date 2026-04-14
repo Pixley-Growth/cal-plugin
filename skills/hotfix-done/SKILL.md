@@ -1,5 +1,5 @@
 ---
-name: cal-hotfix-done
+name: hotfix-done
 description: "Exit hotfix mode. Guided merge chain: hotfix -> main -> feature branches. Cleans up worktree. Usage: /cal:hotfix-done"
 ---
 

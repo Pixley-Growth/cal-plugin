@@ -1,5 +1,5 @@
 ---
-name: cal-hotfix
+name: hotfix
 description: "Enter hotfix mode. Creates a worktree-based hotfix branch off main. Parks current feature work safely. Usage: /cal:hotfix [version]"
 argument-hint: "version (optional) - Hotfix version number, e.g. 2.1"
 ---

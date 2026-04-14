@@ -1,5 +1,5 @@
 ---
-name: cal-meet
+name: meet
 description: "Virtual meeting coordinator - collaborative thinking with AI agents"
 argument-hint: "topic (optional) - Meeting topic to discuss"
 ---

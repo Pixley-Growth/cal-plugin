@@ -1,5 +1,5 @@
 ---
-name: cal-design
+name: design
 description: "Apple Liquid Glass (iOS 26) design system reference. Invoke when building UI, reviewing visual design, or implementing glass effects, typography, spacing, animations, or accessibility."
 ---
 
