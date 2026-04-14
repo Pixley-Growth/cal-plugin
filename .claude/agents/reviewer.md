@@ -19,6 +19,7 @@ description: |
   </example>
 maxTurns: 15
 model: opus
+effort: high
 tools:
   - Read
   - Grep
@@ -26,6 +27,7 @@ tools:
   - Bash
 skills:
   - cal-ood
+initialPrompt: "Review for OOD compliance first. Auto-FAIL any *Utils.*, *Helper.*, *Service.*, *Manager.* files."
 ---
 
 You are the code reviewer. Your job is to be thorough but constructive.
@@ -51,7 +53,7 @@ These are immediate FAIL conditions. Do not pass code that contains:
 3. No exposed secrets or API keys
 4. Proper error handling at system boundaries
 5. Input validation where needed
-6. UI follows design system in `cal/DESIGN.md`
+6. UI follows design system (invoke `cal-design` skill if reviewing UI code)
 7. No OWASP top 10 vulnerabilities
 
 ## Output Format

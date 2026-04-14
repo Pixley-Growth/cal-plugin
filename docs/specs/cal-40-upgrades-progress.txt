@@ -1,0 +1,30 @@
+Phase 1: CLAUDE.md Restructure + Kill NOW.md — COMPLETE
+  - cal-design skill created (skills/cal-design/SKILL.md)
+  - Analysis protocols moved to cal-analyze skill, selection guide stays in CLAUDE.md
+  - DESIGN.md import removed from CLAUDE.md
+  - analysis.md import removed from CLAUDE.md
+  - Current Work section added (dynamic, updated by hooks)
+  - NOW.md archived to cal/archive/NOW.md
+  - CLAUDE.md reduced from ~940 imported lines to 98 lines + OOD.md + PREFERENCES.md
+  - Coder agent updated to use cal-design skill
+
+Phase 2: Hooks — COMPLETE
+  - SessionStart hook: reads git state, updates Current Work in CLAUDE.md (tested)
+  - PostCompact hook: re-injects Current Work section (tested)
+  - PreToolUse OOD enforcement: blocks *Utils.*, *Helper.*, etc. (tested, exit 2)
+  - PreToolUse main protection: blocks commits to main without [release]/[hotfix-merge] (tested)
+  - Stop hook: reminder to verify OOD compliance
+  - All hooks wired in .claude/settings.local.json
+  - Permission allowlists cleaned up (wildcard patterns)
+
+Phase 3: Hotfix Flow — COMPLETE
+  - /cal:hotfix skill created (worktree-based, records state to active-hotfix.json)
+  - /cal:hotfix-done skill created (guided merge chain with user confirmation)
+  - .worktrees/ and cal/active-hotfix.json added to .gitignore
+  - Integrated with SessionStart hook (detects active hotfix, includes in briefing)
+
+Phase 4: Agent Modernization — COMPLETE
+  - Coder: effort: high, initialPrompt, cal-design skill added
+  - Reviewer: effort: high, initialPrompt, design reference updated to skill
+  - Architect: effort: max, maxTurns: 15 (was 10), initialPrompt
+  - agents.md roster updated with effort column and isolation notes

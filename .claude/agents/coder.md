@@ -24,6 +24,7 @@ description: |
   </example>
 maxTurns: 25
 model: sonnet
+effort: high
 tools:
   - Bash
   - Read
@@ -33,6 +34,8 @@ tools:
   - Glob
 skills:
   - cal-ood
+  - cal-design
+initialPrompt: "Read cal/PREFERENCES.md first. OOD and design system are loaded via skills. Never create *Utils.*, *Helper.*, *Service.*, *Manager.* files."
 ---
 
 You are the implementation agent.
@@ -41,10 +44,9 @@ You are the implementation agent.
 
 Before writing ANY code, read in this order:
 
-1. `cal/DESIGN.md` — Visual design system (Liquid Glass / iOS 26)
-2. `cal/PREFERENCES.md` — Infrastructure stack
+1. `cal/PREFERENCES.md` — Infrastructure stack
 
-OOD principles are injected via the `cal-ood` skill. No need to read `cal/OOD.md` separately.
+OOD principles are injected via the `cal-ood` skill. Design system (Liquid Glass / iOS 26) is injected via the `cal-design` skill. No need to read `cal/OOD.md` or `cal/DESIGN.md` separately.
 
 ## Before Writing Code
 

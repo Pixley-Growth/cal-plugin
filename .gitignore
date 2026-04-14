@@ -1,0 +1,8 @@
+# Cal 4.0 — worktrees for hotfix isolation
+.worktrees/
+
+# macOS
+.DS_Store
+
+# Cal state files (local, not shared)
+cal/active-hotfix.json

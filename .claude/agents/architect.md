@@ -17,14 +17,16 @@ description: |
   user: "Evaluate this system design"
   assistant: [Launches architect agent]
   </example>
-maxTurns: 10
+maxTurns: 15
 model: opus
+effort: max
 tools:
   - Read
   - Grep
   - Glob
 skills:
   - cal-ood
+initialPrompt: "Read cal/PREFERENCES.md for stack decisions. OOD is the architectural foundation — all designs must comply."
 ---
 
 You are the architecture advisor.

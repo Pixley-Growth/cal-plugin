@@ -13,7 +13,8 @@ Cal coordinates both programming logic and business logic through OOD. It never 
 | `/cal:save` | Context preservation |
 | `/cal:onboard` | Project setup + CLAUDE.md generation |
 | `/cal:analyze [mode]` | Deep investigation (7 modes) |
-| `/cal:check [scope]` | Retroactive quality review |
+| `/cal:hotfix` | Enter hotfix mode (worktree-based) |
+| `/cal:hotfix-done` | Exit hotfix mode (guided merge chain) |
 
 ## Object-Oriented Data
 
@@ -29,7 +30,29 @@ See @cal/OOD.md for full commandments, translation boundaries, and language-spec
 
 ## Analysis Modes
 
-For deep investigation, Cal offers seven modes: **Cake Walk** (layering bugs), **Rubberneck** (focused scan for a suspect), **Inside-Out** (comprehensive understanding), **Burst Mode** (temporal comparison), **Bisect** (binary search for root cause), **Trace** (follow data end-to-end), **Diff Audit** (catalog state differences). See @cal/analysis.md for full protocols.
+When the user describes a problem, suggest the right mode:
+
+| Trigger | Mode | Shorthand |
+|---------|------|-----------|
+| "How does X work?" | **Inside-Out** | `io` |
+| "The styling/hierarchy is broken" | **Cake Walk** | `cw` |
+| "I think X might cause Y" | **Rubberneck** | `rn` |
+| "Data used to be correct" | **Burst Mode** | `burst` |
+| "It broke, don't know when" | **Bisect** | `bi` |
+| "Where does this value come from?" | **Trace** | `tr` |
+| "It worked before, what changed?" | **Diff Audit** | `da` |
+
+Full protocols load via `/cal:analyze [mode]`.
+
+## Branch Model
+
+**GitHub Flow + Tags.** Cal enforces this:
+
+- **Main = latest shipped version.** Always shippable.
+- **Tags mark releases** (v2.0, v2.1).
+- **Feature branches** fork off main, merge back when ready.
+- **Hotfix branches** fork off main via `/cal:hotfix` (worktree-based).
+- Commits to main blocked unless message contains `[release]` or `[hotfix-merge]`.
 
 ## GitHub Tracking
 
@@ -37,17 +60,12 @@ Cal tracks work on two GitHub Project boards per repo:
 
 | Board | Columns | Tracks |
 |-------|---------|--------|
-| **Epics** | Idea → In Progress → Ready to Ship → Released | Feature suites |
-| **Features** | Cal → Lisa → Ralph → QA → Cleanup | Individual shippable things |
+| **Epics** | Idea > In Progress > Ready to Ship > Released | Feature suites |
+| **Features** | Cal > Lisa > Ralph > QA > Cleanup | Individual shippable things |
 
 **Hierarchy:** Release (Milestone) > Epic (Issue) > Feature (Issue with `epic:slug` label)
 
-- `/cal:onboard` creates both boards
-- `/cal:meet` creates Epic/Feature issues at wrap-up
-- `/cal:next` moves cards at approval gates
-- GitHub is source of truth — Cal reads board state, respects manual moves
-
-**Script:** `scripts/gh-board.sh` wraps all GitHub Projects V2 operations (11 commands). Skills call this script, never raw GraphQL.
+**Script:** `scripts/gh-board.sh` wraps all GitHub Projects V2 operations. Skills call this script, never raw GraphQL.
 
 ## Team
 
@@ -58,7 +76,7 @@ See `cal/agents.md` for roster. Agent definitions in `.claude/agents/`.
 | File | Purpose |
 |------|---------|
 | `cal/cal.md` | Permanent learnings (deltas, decisions, AHAs) |
-| `cal/NOW.md` | Current focus + active pipeline |
+| `cal/OOD.md` | Object-Oriented Data principles (always loaded) |
 
 ## Approval Gates
 
@@ -69,4 +87,13 @@ Phase advancement requires **explicit approval**: "approved", "advance", "next p
 ## Preferences
 
 - **Stack:** @cal/PREFERENCES.md
-- **Design:** @cal/DESIGN.md
+- **Design:** invoke `/cal:design` skill (Liquid Glass / iOS 26 reference)
+
+## Current Work
+
+<!-- Cal maintains this section. Updated by skills and SessionStart hook. -->
+**Branch:** `main`
+**Last commit:** 4fa817e Document GitHub tracking across all Cal touchpoints
+**Branches:** main
+**Mode:** normal
+**Active:** _No active ticket. Run `/cal:next` to pick up work._
