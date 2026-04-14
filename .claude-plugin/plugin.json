@@ -1,7 +1,7 @@
 {
   "name": "cal",
   "description": "Object-oriented coordinator — manages pipelines, dispatches agents, enforces OOD",
-  "version": "3.6.0",
+  "version": "4.0.0",
   "license": "MIT",
   "author": {
     "name": "Cal"
