@@ -11,6 +11,8 @@ Auto Dream consolidates entries between sessions — keep entries atomic and top
 
 - Lean into Claude Code native features (Auto Dream, hooks, memory) rather than building Cal-specific layers. Custom layers compete with native behavior and drift as Claude Code evolves.
 
+- **Always bump plugin version on release.** When shipping a new Cal version: update `claude-code.json` AND `.claude-plugin/plugin.json` version fields, register any new skills in `claude-code.json`, then tag. This has been missed repeatedly.
+
 ---
 
 ## Deltas
@@ -41,4 +43,4 @@ Auto Dream consolidates entries between sessions — keep entries atomic and top
 
 *Current state that helps orient new sessions. Auto Dream prunes when stale.*
 
-- Cal 5.0 in progress on `cal-5.0` branch. 7 features planned, Epic #3. Features #4 and #7 merged. Lisa interview for #5+#9 (Auto-Review + Security) in progress — 5 questions asked, awaiting answers.
+- Cal 5.0 shipped (2026-04-16). Tagged v5.0 on main. All 7 Agentic Trends features delivered. Zero open issues.
