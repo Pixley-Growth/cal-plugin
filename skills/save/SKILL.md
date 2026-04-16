@@ -18,13 +18,13 @@ Agent outputs are scaffolding. Once you've acted on them, the output doesn't mat
 
 ## Routing
 
-| Type | Destination | Lifespan |
-|------|-------------|----------|
-| `delta` | `cal/cal.md` | Permanent |
-| `aha` | `cal/cal.md` | Permanent |
-| `memory` | `cal/cal.md` | Permanent |
-| `decision` | `cal/cal.md` | Permanent |
-| `session` | `cal/memories/YYYY-MM-DD.md` | Prunable |
+| Type | Destination | Section in cal.md | Lifespan |
+|------|-------------|-------------------|----------|
+| `delta` | `cal/cal.md` | `## Deltas` | Permanent (Auto Dream prunes resolved) |
+| `aha` | `cal/cal.md` | `## Principles Learned` | Permanent |
+| `memory` | `cal/cal.md` | `## Active Context` | Prunable by Auto Dream when stale |
+| `decision` | `cal/cal.md` | `## Decisions` | Permanent |
+| `session` | `cal/memories/YYYY-MM-DD.md` | — | Prunable |
 
 ## Usage
 
@@ -87,3 +87,14 @@ On save, verify `cal/cal.md` exists. If not, create it with header.
 ## Size Guidance
 
 If `cal/cal.md` exceeds 300 lines, review and consolidate entries.
+
+## Dream-Friendly Format
+
+`cal/cal.md` is organized by **topic** (Principles, Deltas, Decisions, Active Context) not chronologically. This structure supports Auto Dream consolidation:
+
+- **Principles Learned** — Patterns promoted from experience. Dream may merge related principles.
+- **Deltas** — Wrong assumptions. Dream prunes when the correction is no longer relevant.
+- **Decisions** — Choices with rationale. Dream preserves unless explicitly revisited.
+- **Active Context** — Current state. Dream prunes when stale.
+
+When saving, append to the correct section. Keep entries atomic — one insight per bullet.
