@@ -20,6 +20,13 @@ get_owner() {
   gh repo view --json owner -q '.owner.login' 2>/dev/null
 }
 
+# Returns "Organization" or "User"
+get_owner_type() {
+  local owner
+  owner=$(get_owner)
+  gh api "users/${owner}" -q '.type' 2>/dev/null
+}
+
 check_auth() {
   if ! gh auth status &>/dev/null; then
     echo "WARNING: gh CLI not authenticated. Skipping board operations." >&2
@@ -43,14 +50,15 @@ get_repo_id() {
     }" -q '.data.repository.id'
 }
 
-# Find a project by title owned by the current user
+# Find a project by title linked to the current repository
 find_project() {
   local title="$1"
-  local owner
-  owner=$(get_owner)
+  local repo
+  repo=$(get_repo)
+
   gh api graphql -f query="
     query {
-      user(login: \"${owner}\") {
+      repository(owner: \"${repo%/*}\", name: \"${repo#*/}\") {
         projectsV2(first: 20) {
           nodes {
             title
@@ -59,14 +67,23 @@ find_project() {
           }
         }
       }
-    }" -q ".data.user.projectsV2.nodes[] | select(.title == \"${title}\") | .id" 2>/dev/null || echo ""
+    }" -q ".data.repository.projectsV2.nodes[] | select(.title == \"${title}\") | .id" 2>/dev/null || echo ""
 }
 
-# Create a project owned by the current user
+# Create a project owned by the repo owner (user or org)
 create_project() {
   local title="$1"
+  local owner
+  owner=$(get_owner)
+  local owner_type
+  owner_type=$(get_owner_type)
+
   local owner_id
-  owner_id=$(gh api graphql -f query='query { viewer { id } }' -q '.data.viewer.id')
+  if [ "$owner_type" = "Organization" ]; then
+    owner_id=$(gh api graphql -f query="query { organization(login: \"${owner}\") { id } }" -q '.data.organization.id')
+  else
+    owner_id=$(gh api graphql -f query="query { user(login: \"${owner}\") { id } }" -q '.data.user.id')
+  fi
   gh api graphql -f query="
     mutation {
       createProjectV2(input: {ownerId: \"${owner_id}\", title: \"${title}\"}) {
