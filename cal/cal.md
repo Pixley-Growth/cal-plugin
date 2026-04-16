@@ -41,4 +41,4 @@ Auto Dream consolidates entries between sessions — keep entries atomic and top
 
 *Current state that helps orient new sessions. Auto Dream prunes when stale.*
 
-- Cal 5.0 in progress on `cal-5.0` branch. 7 features planned, Epic #3. Feature #4 (Escalation) in PR #12.
+- Cal 5.0 in progress on `cal-5.0` branch. 7 features planned, Epic #3. Features #4 and #7 merged. Lisa interview for #5+#9 (Auto-Review + Security) in progress — 5 questions asked, awaiting answers.

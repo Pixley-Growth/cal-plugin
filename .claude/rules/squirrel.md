@@ -32,16 +32,18 @@ This is calibration, not criticism. Either party can call it.
 
 ## Journaling
 
-When squirrel is called, write to `cal/cal.md`:
+**Write immediately** to `cal/cal.md` when squirrel is called — do not defer to phase completion:
 
 ```markdown
-## [DATE] SQUIRREL — [Topic]
+## YYYY-MM-DD SQUIRREL — [Topic]
 
 Was doing: [task]
 Interrupted by: [drift cause]
 Decision: [stay / pivot]
 Note: [anything worth capturing]
 ```
+
+Before writing, check if `cal/cal.md` exceeds 200 lines. If so, follow the overflow protocol in the [Coordinator's Auto-Journal Protocol](coordinator.md#auto-journal-protocol).
 
 ## Ratio
 

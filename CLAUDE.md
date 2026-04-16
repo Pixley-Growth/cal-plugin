@@ -15,6 +15,8 @@ Cal coordinates both programming logic and business logic through OOD. It never 
 | `/cal:analyze [mode]` | Deep investigation (7 modes) |
 | `/cal:hotfix` | Enter hotfix mode (worktree-based) |
 | `/cal:hotfix-done` | Exit hotfix mode (guided merge chain) |
+| `/cal:papercuts` | Scan codebase for code hygiene wins (TODOs, dead code, naming) |
+| `/cal:papercuts fix` | Auto-fix findings with per-item approval |
 
 ## Object-Oriented Data
 
@@ -98,8 +100,8 @@ Phase advancement requires **explicit approval**: "approved", "advance", "next p
 ## Current Work
 
 <!-- Cal maintains this section. Updated by skills and SessionStart hook. -->
-**Branch:** `main`
-**Last commit:** ed983f8 [release] Bump version to 4.0.0, update skill registry
-**Branches:** main
+**Branch:** `cal-5.0`
+**Last commit:** 0c8a33c Merge pull request #13 from Pixley-Growth/feature/dream-friendly-journal
+**Branches:** cal-5.0,feature/agent-escalation,feature/agentic-trends-improvements,feature/dream-friendly-journal,main
 **Mode:** normal
 **Active:** _No active ticket. Run `/cal:next` to pick up work._

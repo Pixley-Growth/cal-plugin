@@ -28,16 +28,18 @@ ENCODED: [What code/reasoning was based on the wrong belief]
 
 ## Journaling
 
-Write to `cal/cal.md`:
+**Write immediately** to `cal/cal.md` when a delta fires — do not defer to phase completion:
 
 ```markdown
-## [DATE] DELTA — [Topic]
+## YYYY-MM-DD DELTA — [Topic]
 
 BELIEVED: [wrong assumption]
 ACTUAL: [reality]
 DELTA: [corrected understanding]
 ENCODED: [what was affected]
 ```
+
+Before writing, check if `cal/cal.md` exceeds 200 lines. If so, follow the overflow protocol in the [Coordinator's Auto-Journal Protocol](coordinator.md#auto-journal-protocol).
 
 ## Bidirectional
 

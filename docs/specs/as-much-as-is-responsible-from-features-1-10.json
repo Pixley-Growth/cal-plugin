@@ -1,0 +1,64 @@
+{
+  "name": "Cal 5.0: Agentic Trends Implementation",
+  "slug": "as-much-as-is-responsible-from-features-1-10",
+  "status": "ready",
+  "date": "2026-04-16",
+  "epic": "#3 Agentic Trends Improvements",
+  "branch": "cal-5.0",
+  "features": [
+    {"number": 5, "title": "Auto-Review Pipeline", "issue": 5, "priority": "high"},
+    {"number": 6, "title": "Parallel Agent Dispatch", "issue": 6, "priority": "medium"},
+    {"number": 7, "title": "Auto-Journal on Phase Completion", "issue": 7, "priority": "high"},
+    {"number": 8, "title": "Enhanced Onboarding Artifacts", "issue": 8, "priority": "medium"},
+    {"number": 9, "title": "Security-Aware Review", "issue": 9, "priority": "medium"},
+    {"number": 10, "title": "Papercuts Command", "issue": 10, "priority": "low"}
+  ],
+  "phases": [
+    {
+      "name": "Pipeline Foundation",
+      "features": [5, 7],
+      "stories": ["US-1", "US-3", "US-4", "US-5"],
+      "files": [
+        ".claude/rules/coordinator.md",
+        ".claude/rules/delta.md",
+        ".claude/rules/squirrel.md",
+        "cal/cal.md"
+      ]
+    },
+    {
+      "name": "Security + Onboarding",
+      "features": [9, 8],
+      "stories": ["US-9", "US-6", "US-7", "US-8"],
+      "files": [
+        ".claude/agents/reviewer.md",
+        "skills/onboard/SKILL.md",
+        "docs/ARCHITECTURE.md",
+        "docs/GLOSSARY.md",
+        "docs/DEPENDENCIES.md"
+      ]
+    },
+    {
+      "name": "Parallel + Papercuts",
+      "features": [6, 10],
+      "stories": ["US-2", "US-10", "US-11"],
+      "files": [
+        ".claude/rules/coordinator.md",
+        "skills/papercuts/SKILL.md",
+        "CLAUDE.md"
+      ]
+    }
+  ],
+  "architecture_decisions": [
+    "AD-1: Auto-review always runs, no skip",
+    "AD-2: FAIL reports to user, no auto-re-dispatch",
+    "AD-3: GitHub board is state, no NOW.md",
+    "AD-4: Modify coordinator.md directly",
+    "AD-5: Immediate journal writes, 200-line cap",
+    "AD-6: Parallel results report immediately",
+    "AD-7: Onboarding overwrites existing artifacts",
+    "AD-8: Papercuts is general-purpose",
+    "AD-9: Security is Cal-specific for now"
+  ],
+  "verification": "manual-walkthrough",
+  "shipped_features": [1, 2]
+}
