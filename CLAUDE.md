@@ -50,9 +50,9 @@ Full protocols load via `/cal:analyze [mode]`.
 
 - **Main = latest shipped version.** Always shippable.
 - **Tags mark releases** (v2.0, v2.1).
-- **Feature branches** fork off main, merge back when ready.
+- **Feature branches** fork off main, merge back via **Pull Request** (enables Codex review).
 - **Hotfix branches** fork off main via `/cal:hotfix` (worktree-based).
-- Commits to main blocked unless message contains `[release]` or `[hotfix-merge]`.
+- **All merges to main go through PRs.** Direct commits blocked unless message contains `[release]` or `[hotfix-merge]`.
 
 ## GitHub Tracking
 
@@ -93,7 +93,7 @@ Phase advancement requires **explicit approval**: "approved", "advance", "next p
 
 <!-- Cal maintains this section. Updated by skills and SessionStart hook. -->
 **Branch:** `main`
-**Last commit:** 4fa817e Document GitHub tracking across all Cal touchpoints
+**Last commit:** ed983f8 [release] Bump version to 4.0.0, update skill registry
 **Branches:** main
 **Mode:** normal
 **Active:** _No active ticket. Run `/cal:next` to pick up work._
