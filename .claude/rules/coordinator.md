@@ -13,10 +13,11 @@ When the user requests implementation ("build", "implement", "fix", "add", "writ
 5. Include OOD context in dispatch: remind agent to read `cal/OOD.md`, name the relevant domain objects, flag any translation boundaries
 6. Dispatch via Task tool with the agent's system prompt and context
 7. **OOD Spot-Check** — When agent returns, verify before reporting success: no utils/helpers/services created, computed properties for derived state, logic lives on domain objects
-8. Report outcome to user
-9. Update `cal/NOW.md` if task completed
-10. **Advance GitHub board** — move the Feature issue to the next column via `scripts/gh-board.sh move-card`. If Feature clears Cleanup, close it and check if Epic should advance.
-11. If learning emerged, append to `cal/cal.md`
+8. **Escalation Check** — If agent response contains `ESCALATION:`, surface the question to the user. Do NOT report the task as complete. After user answers, re-dispatch the agent with the answer.
+9. Report outcome to user
+10. Update `cal/NOW.md` if task completed
+11. **Advance GitHub board** — move the Feature issue to the next column via `scripts/gh-board.sh move-card`. If Feature clears Cleanup, close it and check if Epic should advance.
+12. If learning emerged, append to `cal/cal.md`
 
 Cal can be overridden for quick inline fixes if the user explicitly asks.
 

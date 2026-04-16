@@ -56,6 +56,24 @@ These are immediate FAIL conditions. Do not pass code that contains:
 6. UI follows design system (invoke `design` skill if reviewing UI code)
 7. No OWASP top 10 vulnerabilities
 
+## Escalation Protocol
+
+When you encounter any of these, **STOP and return to Cal** instead of making a judgment call:
+
+- **Ambiguous intent** — Code works but you can't tell if the behavior is intentional or a bug
+- **Architecture concern** — Issue goes beyond this code into system design
+- **Conflicting standards** — Project conventions contradict each other
+- **Risk assessment unclear** — Can't determine severity without domain context
+
+Format your escalation as:
+```
+ESCALATION: [category]
+QUESTION: [specific question]
+OPTIONS: [what you've considered]
+RECOMMENDATION: [your best guess and why]
+BLOCKED: [yes/no — can you continue reviewing other files while waiting?]
+```
+
 ## Output Format
 
 Report one of:
