@@ -56,7 +56,82 @@ Scan it and suggest improvements:
 
 Present suggestions to user for approval. Do not overwrite without confirmation.
 
-### 3. Create Cal Structure
+### 3. Generate Architecture Map
+
+Produce `docs/ARCHITECTURE.md` — module boundaries, key abstractions, and data flow.
+
+**Process:**
+1. Use Explore agent (or Glob + Grep) to identify top-level modules and directories
+2. Identify key abstractions: models, services, controllers, views
+3. Map data flow between modules (who calls whom, what data moves where)
+4. Identify external integration points (APIs, databases, file system)
+
+**Output format:**
+
+```markdown
+# Architecture Map
+
+## Modules
+
+| Module | Purpose | Key Files |
+|--------|---------|-----------|
+| [name] | [what it does] | [paths] |
+
+## Data Flow
+
+[description or ASCII diagram showing how data moves between modules]
+
+## Integration Points
+
+| System | Purpose | Location |
+|--------|---------|----------|
+| [name] | [why] | [where in code] |
+```
+
+**Overwrites existing file** if present (codebase is source of truth).
+
+### 4. Generate Domain Glossary
+
+Produce `docs/GLOSSARY.md` — domain terms mapped to code locations.
+
+**Process:**
+1. Extract from: model/class names, enum cases, computed properties, key constants
+2. Include Cal-specific terms if this is a Cal-managed project (OOD, squirrel, delta, fences, etc.)
+3. Map each term to where it's defined in code
+
+**Output format:**
+
+```markdown
+# Domain Glossary
+
+| Term | Definition | Code Location | Related |
+|------|-----------|---------------|---------|
+| [term] | [what it means in this domain] | [file:line] | [related terms] |
+```
+
+**Overwrites existing file** if present.
+
+### 5. Generate Dependency Overview
+
+Produce `docs/DEPENDENCIES.md` — external dependencies with purpose.
+
+**Process:**
+1. Parse package manifests: `Package.swift`, `package.json`, `Podfile`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `Gemfile`
+2. For each dependency: name, version/constraint, purpose (infer from name or usage), license if detectable
+
+**Output format:**
+
+```markdown
+# Dependencies
+
+| Dependency | Version | Purpose | License |
+|-----------|---------|---------|---------|
+| [name] | [version] | [what it's used for] | [if known] |
+```
+
+**Overwrites existing file** if present.
+
+### 6. Create Cal Structure
 
 Create the cal/ directory if it doesn't exist:
 
@@ -64,7 +139,6 @@ Create the cal/ directory if it doesn't exist:
 cal/
 ├── cal.md              # Permanent learnings journal
 ├── agents.md           # Team roster
-├── NOW.md              # Current focus + pipeline
 ├── analysis.md         # Analysis mode protocols
 ├── memories/           # Ephemeral session context
 ├── OOD.md              # Code principles
@@ -82,7 +156,7 @@ ideas/
 └── hopper.md           # Idea parking lot (unstructured)
 ```
 
-### 4. Create Behavioral Rules
+### 7. Create Behavioral Rules
 
 Create `.claude/rules/` with Cal behavioral rules if they don't exist:
 - `coordinator.md` — Dispatch behavior + approval gates
@@ -90,14 +164,14 @@ Create `.claude/rules/` with Cal behavioral rules if they don't exist:
 - `squirrel.md` — Drift/scope creep detection
 - `delta.md` — Wrong assumption detection
 
-### 5. Create Agent Definitions
+### 8. Create Agent Definitions
 
 Create `.claude/agents/` with default team if they don't exist:
 - `coder.md` — Implementation agent (Sonnet)
 - `reviewer.md` — Code review agent (Opus)
 - `architect.md` — Architecture advisor (Opus)
 
-### 6. Suggest Additional Agents
+### 9. Suggest Additional Agents
 
 Based on detected patterns:
 
@@ -108,7 +182,7 @@ Based on detected patterns:
 | Large codebase | atomizer | Extraction and size limits |
 | Security-sensitive | security-auditor | Security scanning |
 
-### 7. GitHub Project Boards
+### 10. GitHub Project Boards
 
 Create the two tracking boards on the repo's GitHub Project:
 
@@ -127,7 +201,7 @@ Report board status:
 - `Boards: already exist` (idempotent)
 - `Boards: skipped (gh not configured)` (graceful failure)
 
-### 8. User Profile (Optional)
+### 11. User Profile (Optional)
 
 Offer to set up a user profile at `~/.claude/cal/USER-PROFILE.md`:
 - Professional background
@@ -138,6 +212,7 @@ Offer to set up a user profile at `~/.claude/cal/USER-PROFILE.md`:
 
 Running `/cal:onboard` again:
 - Re-scans codebase (patterns may have changed)
+- **Overwrites** docs/ARCHITECTURE.md, docs/GLOSSARY.md, docs/DEPENDENCIES.md (codebase is source of truth)
 - Does NOT overwrite existing cal/ files
 - Suggests CLAUDE.md improvements
 - Updates agent suggestions based on new patterns
@@ -153,6 +228,9 @@ After onboarding:
 **Stack:** [detected]
 **Created:** [list of new files]
 **CLAUDE.md:** [generated / improved / unchanged]
+**Architecture Map:** [generated / updated]
+**Domain Glossary:** [generated / updated]
+**Dependencies:** [generated / updated]
 **Agents:** [list]
 **Boards:** [created / already exist / skipped]
 **Next:** Run /cal:next to start working

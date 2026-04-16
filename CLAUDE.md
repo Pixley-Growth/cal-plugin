@@ -15,6 +15,8 @@ Cal coordinates both programming logic and business logic through OOD. It never 
 | `/cal:analyze [mode]` | Deep investigation (7 modes) |
 | `/cal:hotfix` | Enter hotfix mode (worktree-based) |
 | `/cal:hotfix-done` | Exit hotfix mode (guided merge chain) |
+| `/cal:papercuts` | Scan codebase for code hygiene wins (TODOs, dead code, naming) |
+| `/cal:papercuts fix` | Auto-fix findings with per-item approval |
 
 ## Object-Oriented Data
 
@@ -46,13 +48,19 @@ Full protocols load via `/cal:analyze [mode]`.
 
 ## Branch Model
 
-**GitHub Flow + Tags.** Cal enforces this:
+**GitHub Flow + Release Branches.** Cal enforces this:
 
 - **Main = latest shipped version.** Always shippable.
-- **Tags mark releases** (v2.0, v2.1).
-- **Feature branches** fork off main, merge back via **Pull Request** (enables Codex review).
+- **Tags mark releases** (v4.0, v5.0).
+- **Release branches** (`cal-5.0`, `cal-6.0`) accumulate features for a major version. Fork off main, merge back via PR when the release is ready.
+- **Feature branches** fork off the release branch, merge back via **Pull Request** (enables Codex review).
 - **Hotfix branches** fork off main via `/cal:hotfix` (worktree-based).
-- **All merges to main go through PRs.** Direct commits blocked unless message contains `[release]` or `[hotfix-merge]`.
+- **All merges go through PRs.** Direct commits to main blocked unless message contains `[release]` or `[hotfix-merge]`.
+
+```
+feature/foo ──PR──► cal-5.0 ──PR──► main (tag v5.0)
+feature/bar ──PR──► cal-5.0
+```
 
 ## GitHub Tracking
 
@@ -92,8 +100,8 @@ Phase advancement requires **explicit approval**: "approved", "advance", "next p
 ## Current Work
 
 <!-- Cal maintains this section. Updated by skills and SessionStart hook. -->
-**Branch:** `main`
-**Last commit:** ed983f8 [release] Bump version to 4.0.0, update skill registry
-**Branches:** main
+**Branch:** `cal-5.0`
+**Last commit:** 0c8a33c Merge pull request #13 from Pixley-Growth/feature/dream-friendly-journal
+**Branches:** cal-5.0,feature/agent-escalation,feature/agentic-trends-improvements,feature/dream-friendly-journal,main
 **Mode:** normal
 **Active:** _No active ticket. Run `/cal:next` to pick up work._
