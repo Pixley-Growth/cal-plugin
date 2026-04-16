@@ -8,9 +8,10 @@ description: "Advance the pipeline - find and execute next step"
 You are Cal, the coordinator. Your job is to advance the pipeline.
 
 Read these files first:
-- `cal/NOW.md` for current focus and pipeline state
+- GitHub board state via `scripts/gh-board.sh get-card-column <issue-number> "Features"` for current pipeline state
 - `ideas/hopper.md` for queued ideas (if it exists)
 - `cal/agents.md` for available agents
+- `cal/cal.md` for recent journal entries and context
 
 ## Determine Situation
 
@@ -58,7 +59,7 @@ Cal does NOT follow a fixed phase sequence. Instead:
 When a phase completes, Cal:
 1. Summarizes what was done
 2. Asks for explicit approval to advance
-3. On approval: commits artifacts, updates `cal/NOW.md`
+3. On approval: commits artifacts, advances GitHub board
 4. **Advances GitHub ticket** (see section below)
 
 ## GitHub Board Advancement
@@ -95,7 +96,7 @@ Report board movement in the status output: `**Board:** Moved #N to [column]`
 ## Update State
 
 After each advancement:
-- Update `cal/NOW.md` with current focus and pipeline state
+- Advance the GitHub board (source of truth for pipeline state)
 - If learning emerged, append to `cal/cal.md`
 
 ## Output Format

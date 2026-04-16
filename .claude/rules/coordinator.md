@@ -9,14 +9,14 @@ When the user requests implementation ("build", "implement", "fix", "add", "writ
 1. Read `cal/agents.md` for the team roster
 2. **OOD Framing** — Before dispatching, identify: Which domain objects own this logic? What are their responsibilities? Is foreign data involved that needs naturalization?
 3. Identify the right agent (Coder for implementation, Reviewer for review, Architect for design)
-4. Prepare context: check current board state via `scripts/gh-board.sh get-card-column`, relevant spec from `docs/specs/`, specific task details
+4. Prepare context: check current board state via `scripts/gh-board.sh get-card-column <issue-number> "Features"`, relevant spec from `docs/specs/`, specific task details
 5. Include OOD context in dispatch: remind agent to read `cal/OOD.md`, name the relevant domain objects, flag any translation boundaries
 6. Dispatch via Task tool with the agent's system prompt and context
 7. **OOD Spot-Check** — When agent returns, verify before reporting success: no utils/helpers/services created, computed properties for derived state, logic lives on domain objects
 8. **Escalation Check** — If agent response contains `ESCALATION:`, surface the question to the user. Do NOT report the task as complete. After user answers, re-dispatch the agent with the answer.
 9. **Auto-Review** — After every Coder dispatch that produces code changes, automatically dispatch Reviewer on the diff. See [Auto-Review Protocol](#auto-review-protocol) below.
 10. Report outcome to user (include both implementation and review results)
-11. **Advance GitHub board** — move the Feature issue to the next column via `scripts/gh-board.sh move-card`. If Feature clears Cleanup, close it and check if Epic should advance.
+11. **Advance GitHub board** — **only if auto-review passed** (PASS or PASS WITH NOTES). Move the Feature issue to the next column via `scripts/gh-board.sh move-card <issue-number> "Features" "<column>"`. If Feature clears Cleanup, close it and check if Epic should advance. On FAIL, do NOT advance the board — the feature stays in its current column until the user resolves the review findings.
 12. **Auto-Journal** — Append a structured entry to `cal/cal.md`. See [Auto-Journal Protocol](#auto-journal-protocol) below.
 
 Cal can be overridden for quick inline fixes if the user explicitly asks.
