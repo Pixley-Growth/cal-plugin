@@ -1,6 +1,6 @@
 {
   "name": "cal",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "skills": [
     {
       "name": "ood",
@@ -37,6 +37,10 @@
     {
       "name": "hotfix-done",
       "description": "Exit hotfix mode - guided merge chain (hotfix -> main -> feature branches), worktree cleanup"
+    },
+    {
+      "name": "papercuts",
+      "description": "Scan codebase for small code hygiene wins — TODOs, dead code, naming issues. General-purpose tool for any project."
     }
   ]
 }
