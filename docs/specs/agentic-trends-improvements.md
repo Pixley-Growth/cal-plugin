@@ -171,9 +171,9 @@ Journal entry format:
 
 **Implementation:**
 - Modify skills that trigger state changes (`/cal:next`, board moves) to append to `cal/cal.md`
-- Add auto-journal call after coordinator dispatch completes
+- **Single write point:** Journal at the board-move call site only — NOT also after coordinator dispatch. This prevents duplicate entries when `/cal:next` both moves a card and completes a dispatch in the same flow.
 - Keep entries concise (3-5 lines max)
-- Memory system handles cross-conversation persistence; journal handles within-project history
+- Memory system (`cal/memories/`) handles cross-conversation persistence; journal handles within-project history
 
 **Acceptance criteria:**
 - [ ] Phase completions auto-logged to `cal/cal.md`
@@ -290,7 +290,7 @@ Extend Reviewer. One review pass, not two. Keeps the pipeline simple. A dedicate
 Auto-review runs on diff only, not full codebase. Full codebase reviews are a separate concern. This keeps the feedback loop tight.
 
 ### AD-3: Journal vs. Memory
-Journal (`cal/cal.md`) tracks project-level history within the repo. Memory (`memories/`) tracks user preferences and cross-project context. They serve different purposes and both persist.
+Journal (`cal/cal.md`) tracks project-level history within the repo. Memory (`cal/memories/`) tracks ephemeral session context that's prunable. They serve different purposes and both persist.
 
 ---
 
