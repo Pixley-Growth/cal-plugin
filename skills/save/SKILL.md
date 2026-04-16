@@ -41,15 +41,15 @@ Agent outputs are scaffolding. Once you've acted on them, the output doesn't mat
 
 ## Entry Schema
 
-All entries follow this format:
+Entries are **atomic bullets** appended to the correct section in `cal/cal.md`:
 
 ```markdown
-## [ISO-8601-DATE] [TYPE] — [TOPIC]
-
-[Content]
-
----
+- **[topic] ([YYYY-MM-DD]):** BELIEVED: X. ACTUAL: Y. DELTA: Z.
+- **[topic] ([YYYY-MM-DD]):** CHOICE: X. RATIONALE: Y. REVISIT-IF: Z.
+- **[topic] ([YYYY-MM-DD]):** [principle or context]
 ```
+
+One insight per bullet. Date in parentheses for Auto Dream pruning. No heading blocks.
 
 ## Session Save Template
 
@@ -82,7 +82,38 @@ Session saves go to `cal/memories/YYYY-MM-DD.md`:
 
 ## Location Check
 
-On save, verify `cal/cal.md` exists. If not, create it with header.
+On save, verify `cal/cal.md` exists. If not, create it with the full template including all four sections:
+
+```markdown
+# Cal Brain
+
+Cal's persistent project knowledge. Organized by topic, not chronologically.
+Auto Dream consolidates entries between sessions — keep entries atomic and topical.
+
+---
+
+## Principles Learned
+
+*Patterns promoted from repeated experience.*
+
+---
+
+## Deltas
+
+*Wrong assumptions corrected. BELIEVED / ACTUAL / DELTA format.*
+
+---
+
+## Decisions
+
+*Architectural choices with rationale. CHOICE / RATIONALE / REVISIT-IF format.*
+
+---
+
+## Active Context
+
+*Current state that helps orient new sessions. Auto Dream prunes when stale.*
+```
 
 ## Size Guidance
 
