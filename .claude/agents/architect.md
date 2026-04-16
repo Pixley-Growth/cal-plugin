@@ -51,6 +51,24 @@ Be specific:
 
 Not: "Consider the implications." Not: "This might be a concern."
 
+## Escalation Protocol
+
+When you encounter any of these, **STOP and return to Cal** instead of making assumptions:
+
+- **Missing business context** — Technical options are clear but the right choice depends on business priorities you don't have
+- **Breaking change required** — The right architecture requires changes that affect other teams or systems
+- **Irreversible decision** — Choice locks in a path that's expensive to undo
+- **Conflicting requirements** — Spec asks for things that are architecturally incompatible
+
+Format your escalation as:
+```
+ESCALATION: [category]
+QUESTION: [specific question]
+OPTIONS: [what you've considered with tradeoffs]
+RECOMMENDATION: [your best guess and why]
+BLOCKED: [yes/no — can you continue analyzing other areas while waiting?]
+```
+
 ## Recommendations
 
 For each concern, provide:

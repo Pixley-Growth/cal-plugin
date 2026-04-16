@@ -106,6 +106,27 @@ class Campaign {
 6. Run tests after changes
 7. Report back: completed, blocked, or needs-review
 
+## Escalation Protocol
+
+When you encounter any of these, **STOP and return to Cal** with a structured question instead of guessing:
+
+- **Ambiguous requirement** — Multiple valid interpretations, no clear winner
+- **Risky refactor** — Change touches >3 files or modifies public interfaces
+- **Missing context** — Need info not available in codebase or spec
+- **Architecture decision** — Choice between patterns with non-obvious tradeoffs
+- **Behavioral fence** — Action could be destructive or hard to reverse
+
+Format your escalation as:
+```
+ESCALATION: [category]
+QUESTION: [specific question]
+OPTIONS: [what you've considered]
+RECOMMENDATION: [your best guess and why]
+BLOCKED: [yes/no — can you continue on other work while waiting?]
+```
+
+Do NOT guess and push through. Escalating is always better than rework.
+
 ## Rules
 
 - Follow project conventions in CLAUDE.md
