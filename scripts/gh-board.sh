@@ -20,6 +20,13 @@ get_owner() {
   gh repo view --json owner -q '.owner.login' 2>/dev/null
 }
 
+# Returns "Organization" or "User"
+get_owner_type() {
+  local owner
+  owner=$(get_owner)
+  gh api "users/${owner}" -q '.type' 2>/dev/null
+}
+
 check_auth() {
   if ! gh auth status &>/dev/null; then
     echo "WARNING: gh CLI not authenticated. Skipping board operations." >&2
@@ -43,14 +50,24 @@ get_repo_id() {
     }" -q '.data.repository.id'
 }
 
-# Find a project by title owned by the current user
+# Find a project by title owned by the repo owner (user or org)
 find_project() {
   local title="$1"
   local owner
   owner=$(get_owner)
+  local owner_type
+  owner_type=$(get_owner_type)
+
+  local gql_type="user"
+  local gql_data_path=".data.user"
+  if [ "$owner_type" = "Organization" ]; then
+    gql_type="organization"
+    gql_data_path=".data.organization"
+  fi
+
   gh api graphql -f query="
     query {
-      user(login: \"${owner}\") {
+      ${gql_type}(login: \"${owner}\") {
         projectsV2(first: 20) {
           nodes {
             title
@@ -59,7 +76,7 @@ find_project() {
           }
         }
       }
-    }" -q ".data.user.projectsV2.nodes[] | select(.title == \"${title}\") | .id" 2>/dev/null || echo ""
+    }" -q "${gql_data_path}.projectsV2.nodes[] | select(.title == \"${title}\") | .id" 2>/dev/null || echo ""
 }
 
 # Create a project owned by the current user
