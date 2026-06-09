@@ -277,6 +277,70 @@ This is not magic. It's the logical consequence of self-describing data + behavi
 
 ---
 
+## App Intents Is OOD, Enforced by the OS
+
+Apple's **App Intents** framework (iOS/macOS 26+, expanded at WWDC 2026 for 27) is the strongest external validation of these pillars. It is not *like* OOD — it is OOD made mandatory by the platform. When you expose app functionality to Siri, Apple Intelligence, Shortcuts, and Spotlight, you do it by declaring self-describing types, not by writing an AI integration layer. For the iOS 27 / WWDC 2026 specifics, invoke the `os27` skill.
+
+### The pillars, mapped to the framework
+
+| Pillar | App Intents mechanism |
+|--------|----------------------|
+| **1. Self-Describing Data** | `@AppEntity(schema:)`, `@Property(title:)`, `displayRepresentation`, `@AppEnum(schema:)`. The schema IS the API the model reads. Apple's "Use Model" action literally serializes your entity's exposed properties to JSON for the model — *add a field, AI gains a capability.* `@ComputedProperty` / `@DeferredProperty` are getters for derived state, exactly Commandment 3. |
+| **2. Behavioral Fences** | `authenticationPolicy` (`.requiresAuthentication`, `.requiresLocalDeviceAuthentication`), `requestConfirmation`, and (iOS 27) `OwnershipProvidingEntity` + `EntityOwnership` for sensitive-action prompts, `UndoableIntent` for reversibility. Safety declared **as data on the intent**, not external infrastructure. |
+| **3. Unified Interfaces** | One `AppIntent` serves Siri, Shortcuts, Spotlight, widgets, the Action button, **and** your own UI. One code path, human or AI. No separate AI endpoint. |
+
+```swift
+// Self-describing + fenced + unified, all on the object:
+@AppIntent(schema: .photos.deleteAsset)
+struct DeletePhotoIntent: AppIntent {
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
+
+    @Parameter(title: "Photo")
+    var target: PhotoEntity
+
+    func perform() async throws -> some IntentResult {
+        try await requestConfirmation(/* destructive — fence as data */)
+        try await PhotoLibrary.shared.delete(target)
+        return .result()
+    }
+}
+```
+
+### The Outbound Translation Boundary (the nuance that overrides "pull it in")
+
+OOD's default move is **pull logic onto the object**. App Intents is the one place that move is *wrong*. Apple's rule: **do not make your domain model (`@Model`, your core class) conform to `AppEntity`.** Keep a separate entity that converts from the model.
+
+This is not a contradiction — it's a translation boundary running **outbound**. The naturalization pattern above brings foreign data IN (Meta JSON → citizen). The `AppEntity` is the mirror image: a **curated citizen projection exposed OUT** to the system.
+
+```
+Domain Model (rich, internal)
+    |
+    v
+Project: expose only what the system should see, in domain vocabulary
+    |
+    v
+AppEntity (citizen the OS/AI consumes — stable id, display rep, indexed properties)
+```
+
+```swift
+// Core model — stays internal, never conforms to AppEntity
+final class Photo { var id: UUID; var rawPixels: Data; var exif: EXIF; /* ...lots... */ }
+
+// Outbound citizen — curated projection for the system
+@AppEntity(schema: .photos.asset)
+struct PhotoEntity {
+    var id: UUID
+    @Property(title: "Caption") var caption: String
+    init(from photo: Photo) { self.id = photo.id; self.caption = photo.caption }
+}
+```
+
+**Why separate:** coupling the model to `AppEntity` leaks internal structure into the system's contract, drags serialization/`Sendable` constraints onto your domain core, and forces every internal change through the OS-facing schema. The projection keeps the fence between "what we store" and "what the system may see."
+
+**Rule:** Inbound foreign data → naturalize to a citizen. Outbound to the system → project a citizen. Both directions cross a translation boundary. Never expose the raw model on either side.
+
+---
+
 ## Before Writing Code
 
 1. **Does this logic describe what the object IS?** -> Put it ON the object
@@ -285,6 +349,7 @@ This is not magic. It's the logical consequence of self-describing data + behavi
 4. **Is the first parameter a domain object?** -> That logic belongs ON it
 5. **Would I need to import a utility to use this object?** -> Those should be getters/computed properties
 6. **Is this foreign data entering the domain?** -> Naturalize it first. Then it's a citizen.
+7. **Am I exposing this object to the OS/AI (App Intents, Siri, Spotlight)?** -> Project a separate citizen (`AppEntity`). Do NOT conform the domain model itself.
 
 ## The Litmus Test
 

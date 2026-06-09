@@ -1,9 +1,9 @@
 ---
 name: design
-description: "Apple Liquid Glass (iOS 26) design system reference. Invoke when building UI, reviewing visual design, or implementing glass effects, typography, spacing, animations, or accessibility."
+description: "Apple Liquid Glass (iOS 26, refined in 27) design system reference. Invoke when building UI, reviewing visual design, or implementing glass effects, background extension, tab bar minimize, typography, spacing, animations, or accessibility."
 ---
 
-# Design System: Apple Liquid Glass (iOS 26)
+# Design System: Apple Liquid Glass (iOS 26, refined in 27)
 
 Research compiled from WWDC 2025, Apple Human Interface Guidelines, and developer community analysis.
 
@@ -410,6 +410,51 @@ Before shipping UI, verify:
 - Don't fake bevels or borders manually
 - Don't use linear easing for transitions
 - Don't ignore accessibility settings
+
+---
+
+## 12. iOS 27 Refinements (WWDC 2026)
+
+Liquid Glass shipped in iOS 26 (everything above). iOS 27 **refines** it — Apple framed these as changes developers "must adopt," not optional. Sourced from `iPhoneOS27.0.sdk` SwiftUI (✅) and WWDC 2026 coverage (📰).
+
+### New API: background extension ✅
+
+```swift
+heroImage
+    .backgroundExtensionEffect()              // content bleeds UNDER glass chrome, not clipped
+    .backgroundExtensionEffect(isEnabled: isScrolledUnder)
+```
+
+Use for full-bleed imagery/backdrops that should sit *beneath* translucent navigation/sidebars. This is the headline 27 glass modifier (the 26 core `glassEffect` / `GlassEffectContainer` are unchanged).
+
+### Tab bar minimize ✅
+
+```swift
+TabView { … }.tabBarMinimizeBehavior(.onScrollDown)   // .automatic / .onScrollDown / .onScrollUp / .never
+```
+
+The floating glass tab bar shrinks on scroll to reclaim space. Adopt it on scroll-heavy screens so the glass chrome stays out of the way.
+
+### Toolbar degradation ✅
+
+The glass toolbar must collapse gracefully on narrow widths. Assign `visibilityPriority(.high/.low)` to toolbar items; overflow goes to `ToolbarOverflowMenu` automatically. (Full API in `swiftui27` §4.)
+
+```swift
+ToolbarItem { SaveButton() }.visibilityPriority(.high)   // survives the squeeze
+ToolbarItem { InfoButton() }.visibilityPriority(.low)    // collapses to overflow first
+```
+
+### User transparency setting (📰)
+
+iOS 27 adds a Settings slider letting users **dial down glass transparency** system-wide (an accessibility/personalization control beyond Reduce Transparency). Implication: never assume a fixed translucency — your contrast must hold across the full range. Re-run the contrast checks in §9 at both extremes, and keep relying on system materials (which respond to the setting) over hardcoded opacity.
+
+### Adoption checklist (27)
+
+1. Replace clipped hero/backdrop images with `.backgroundExtensionEffect()`.
+2. Add `.tabBarMinimizeBehavior` to scrollable tab screens.
+3. Give every toolbar item a `visibilityPriority`; verify overflow behavior at iPhone-mini width.
+4. Validate contrast at min **and** max user transparency.
+5. Re-verify exact symbols in Xcode 27 — these are SDK-confirmed but beta-era.
 
 ---
 
