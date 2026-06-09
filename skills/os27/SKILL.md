@@ -224,7 +224,7 @@ The 27 schema system is the strongest external validation of Cal's OOD doctrine 
 - **Pillar 2 (Behavioral Fences):** now first-class in 27 — `OwnershipProvidingEntity`/`EntityOwnership` (confirmation for sensitive actions), `UndoableIntent`, `authenticationPolicy`, `requestConfirmation`. Fences declared *as data on the object*, not external infra.
 - **Pillar 3 (Unified Interfaces):** one `AppIntent` serves Siri, Shortcuts, Spotlight, widgets, and your own UI. One code path, human or AI.
 
-**The one nuance that overrides naive OOD:** Apple says **don't** make your `@Model` conform to `AppEntity` — keep a separate entity that converts from the model. In OOD terms that's a **translation boundary running outbound**: the `AppEntity` is a curated *citizen projection* exposed to the system, the mirror image of naturalizing foreign data inbound. Here, "pull logic onto the object" is the wrong move; project a clean citizen instead.
+**The one nuance that tempers naive OOD:** Apple's [AppEntity docs](https://developer.apple.com/documentation/appintents/appentity) leave direct conformance up to you — fine for a small, stable model, but a *separate* entity that converts from the model is usually better once the model is rich or churning. In OOD terms that separate entity is a **translation boundary running outbound**: a curated *citizen projection* exposed to the system, the mirror image of naturalizing foreign data inbound. Cal's default is to project a citizen; "pull logic onto the object" is the move to second-guess here. (Full doctrine: `cal/OOD.md` → Outbound Translation Boundary.)
 
 ---
 

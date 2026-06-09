@@ -306,11 +306,11 @@ struct DeletePhotoIntent: AppIntent {
 }
 ```
 
-### The Outbound Translation Boundary (the nuance that overrides "pull it in")
+### The Outbound Translation Boundary (where "pull it in" needs a second look)
 
-OOD's default move is **pull logic onto the object**. App Intents is the one place that move is *wrong*. Apple's rule: **do not make your domain model (`@Model`, your core class) conform to `AppEntity`.** Keep a separate entity that converts from the model.
+OOD's default move is **pull logic onto the object**. App Intents is where that move deserves scrutiny. Apple's [AppEntity docs](https://developer.apple.com/documentation/appintents/appentity) leave it to you — a domain type *may* conform to `AppEntity` directly, and for a small, stable, already-AppEntity-shaped model that's a supported, reasonable choice. But the moment the model is rich or churning, a **separate entity that converts from the model** is usually the better call.
 
-This is not a contradiction — it's a translation boundary running **outbound**. The naturalization pattern above brings foreign data IN (Meta JSON → citizen). The `AppEntity` is the mirror image: a **curated citizen projection exposed OUT** to the system.
+**Cal's default: project a citizen** unless the model is genuinely small and stable. This is a translation boundary running **outbound**. The naturalization pattern above brings foreign data IN (Meta JSON → citizen). The projected `AppEntity` is the mirror image: a **curated citizen exposed OUT** to the system.
 
 ```
 Domain Model (rich, internal)
@@ -323,7 +323,7 @@ AppEntity (citizen the OS/AI consumes — stable id, display rep, indexed proper
 ```
 
 ```swift
-// Core model — stays internal, never conforms to AppEntity
+// Rich/churning model — keep internal, project rather than conform
 final class Photo { var id: UUID; var rawPixels: Data; var exif: EXIF; /* ...lots... */ }
 
 // Outbound citizen — curated projection for the system
@@ -335,9 +335,9 @@ struct PhotoEntity {
 }
 ```
 
-**Why separate:** coupling the model to `AppEntity` leaks internal structure into the system's contract, drags serialization/`Sendable` constraints onto your domain core, and forces every internal change through the OS-facing schema. The projection keeps the fence between "what we store" and "what the system may see."
+**Why project (when the model isn't trivial):** coupling a rich model to `AppEntity` leaks internal structure into the system's contract, drags serialization/`Sendable` constraints onto your domain core, and forces every internal change through the OS-facing schema. A projection keeps the fence between "what we store" and "what the system may see." For a small, stable model none of those costs bite — direct conformance is fine there.
 
-**Rule:** Inbound foreign data → naturalize to a citizen. Outbound to the system → project a citizen. Both directions cross a translation boundary. Never expose the raw model on either side.
+**Default:** Inbound foreign data → naturalize to a citizen. Outbound to the system → project a citizen *unless the model is small and stable enough to conform directly*. Both directions cross a translation boundary; decide where the conversion lives based on the model's size and volatility.
 
 ---
 
@@ -349,7 +349,7 @@ struct PhotoEntity {
 4. **Is the first parameter a domain object?** -> That logic belongs ON it
 5. **Would I need to import a utility to use this object?** -> Those should be getters/computed properties
 6. **Is this foreign data entering the domain?** -> Naturalize it first. Then it's a citizen.
-7. **Am I exposing this object to the OS/AI (App Intents, Siri, Spotlight)?** -> Project a separate citizen (`AppEntity`). Do NOT conform the domain model itself.
+7. **Am I exposing this object to the OS/AI (App Intents, Siri, Spotlight)?** -> Default to projecting a separate citizen (`AppEntity`); conform the domain model directly only when it's small and stable.
 
 ## The Litmus Test
 
