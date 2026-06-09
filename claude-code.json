@@ -1,6 +1,6 @@
 {
   "name": "cal",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "skills": [
     {
       "name": "ood",
@@ -28,7 +28,7 @@
     },
     {
       "name": "design",
-      "description": "Apple Liquid Glass (iOS 26) design system reference - glass effects, typography, spacing, animations, accessibility"
+      "description": "Apple Liquid Glass (iOS 26, refined in 27) design system reference - glass effects, background extension, tab bar minimize, typography, spacing, animations, accessibility"
     },
     {
       "name": "hotfix",
@@ -41,6 +41,14 @@
     {
       "name": "papercuts",
       "description": "Scan codebase for small code hygiene wins — TODOs, dead code, naming issues. General-purpose tool for any project."
+    },
+    {
+      "name": "os27",
+      "description": "iOS/macOS/iPadOS 27 framework reference (WWDC 2026). Corrects stale model knowledge about App Intents, App Schemas, Foundation Models, and Siri AI. Invoke when building or reviewing iOS 27 features, or when a model assumes iOS 26 / SiriKit is current."
+    },
+    {
+      "name": "swiftui27",
+      "description": "SwiftUI iOS/macOS 27 delta reference (WWDC 2026). SDK-verified new APIs on top of Axiom's iOS 26 SwiftUI skills — navigation transitions, drag/reorder overhaul, copy-cut-paste, toolbar overflow, tab bar minimize, document model, Liquid Glass background extension."
     }
   ]
 }

@@ -277,6 +277,70 @@ This is not magic. It's the logical consequence of self-describing data + behavi
 
 ---
 
+## App Intents Is OOD, Enforced by the OS
+
+Apple's **App Intents** framework (iOS/macOS 26+, expanded at WWDC 2026 for 27) is the strongest external validation of these pillars. It is not *like* OOD — it is OOD made mandatory by the platform. When you expose app functionality to Siri, Apple Intelligence, Shortcuts, and Spotlight, you do it by declaring self-describing types, not by writing an AI integration layer. For the iOS 27 / WWDC 2026 specifics, invoke the `os27` skill.
+
+### The pillars, mapped to the framework
+
+| Pillar | App Intents mechanism |
+|--------|----------------------|
+| **1. Self-Describing Data** | `@AppEntity(schema:)`, `@Property(title:)`, `displayRepresentation`, `@AppEnum(schema:)`. The schema IS the API the model reads. Apple's "Use Model" action literally serializes your entity's exposed properties to JSON for the model — *add a field, AI gains a capability.* `@ComputedProperty` / `@DeferredProperty` are getters for derived state, exactly Commandment 3. iOS 27 extends identity and discoverability as data on the entity: `SyncableEntity` (stable cross-device identifiers), `IndexedEntity` + `IndexedEntityQuery` (Spotlight semantic index — `indexAppEntities(_:)`), `EntityCollection` (large entity sets), and onscreen-context annotations (`.appEntityIdentifier(_:)`, `AppEntityAnnotatable`) that tell Siri what's on screen. |
+| **2. Behavioral Fences** | `authenticationPolicy` (`.requiresAuthentication`, `.requiresLocalDeviceAuthentication`), `requestConfirmation`, and (iOS 27) `OwnershipProvidingEntity` + `EntityOwnership` for sensitive-action prompts, `UndoableIntent` for reversibility, `CancellableIntent` (26.4) for interruption, `IntentExecutionTargets` + `allowedExecutionTargets` to constrain **where** an intent may run, `LongRunningIntent` with explicit background-task options. Safety declared **as data on the intent**, not external infrastructure. |
+| **3. Unified Interfaces** | One `AppIntent` serves Siri, Shortcuts, Spotlight, widgets, the Action button, **and** your own UI. One code path, human or AI. No separate AI endpoint. iOS 27 makes the vocabulary itself unified: **App Schemas** (`.messages.sendMessage`, `.photos.asset` — 23 domains) are system-defined contracts you conform to rather than invent, with all-or-nothing conformance groups (Mail, Clock, Messages) validated at build time. Cross-import overlays (`_HealthKit_AppIntents`, `_MediaPlayer_AppIntents`, …) extend this: adopt the system framework's entities instead of modeling your own. |
+
+```swift
+// Self-describing + fenced + unified, all on the object:
+@AppIntent(schema: .photos.deleteAsset)
+struct DeletePhotoIntent: AppIntent {
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
+
+    @Parameter(title: "Photo")
+    var target: PhotoEntity
+
+    func perform() async throws -> some IntentResult {
+        try await requestConfirmation(/* destructive — fence as data */)
+        try await PhotoLibrary.shared.delete(target)
+        return .result()
+    }
+}
+```
+
+### The Outbound Translation Boundary (where "pull it in" needs a second look)
+
+OOD's default move is **pull logic onto the object**. App Intents is where that move deserves scrutiny. Apple's [AppEntity docs](https://developer.apple.com/documentation/appintents/appentity) leave it to you — a domain type *may* conform to `AppEntity` directly, and for a small, stable, already-AppEntity-shaped model that's a supported, reasonable choice. But the moment the model is rich or churning, a **separate entity that converts from the model** is usually the better call.
+
+**Cal's default: project a citizen** unless the model is genuinely small and stable. This is a translation boundary running **outbound**. The naturalization pattern above brings foreign data IN (Meta JSON → citizen). The projected `AppEntity` is the mirror image: a **curated citizen exposed OUT** to the system.
+
+```
+Domain Model (rich, internal)
+    |
+    v
+Project: expose only what the system should see, in domain vocabulary
+    |
+    v
+AppEntity (citizen the OS/AI consumes — stable id, display rep, indexed properties)
+```
+
+```swift
+// Rich/churning model — keep internal, project rather than conform
+final class Photo { var id: UUID; var rawPixels: Data; var exif: EXIF; /* ...lots... */ }
+
+// Outbound citizen — curated projection for the system
+@AppEntity(schema: .photos.asset)
+struct PhotoEntity {
+    var id: UUID
+    @Property(title: "Caption") var caption: String
+    init(from photo: Photo) { self.id = photo.id; self.caption = photo.caption }
+}
+```
+
+**Why project (when the model isn't trivial):** coupling a rich model to `AppEntity` leaks internal structure into the system's contract, drags serialization/`Sendable` constraints onto your domain core, and forces every internal change through the OS-facing schema. A projection keeps the fence between "what we store" and "what the system may see." For a small, stable model none of those costs bite — direct conformance is fine there.
+
+**Default:** Inbound foreign data → naturalize to a citizen. Outbound to the system → project a citizen *unless the model is small and stable enough to conform directly*. Both directions cross a translation boundary; decide where the conversion lives based on the model's size and volatility.
+
+---
+
 ## Before Writing Code
 
 1. **Does this logic describe what the object IS?** -> Put it ON the object
@@ -285,6 +349,7 @@ This is not magic. It's the logical consequence of self-describing data + behavi
 4. **Is the first parameter a domain object?** -> That logic belongs ON it
 5. **Would I need to import a utility to use this object?** -> Those should be getters/computed properties
 6. **Is this foreign data entering the domain?** -> Naturalize it first. Then it's a citizen.
+7. **Am I exposing this object to the OS/AI (App Intents, Siri, Spotlight)?** -> Default to projecting a separate citizen (`AppEntity`); conform the domain model directly only when it's small and stable.
 
 ## The Litmus Test
 
