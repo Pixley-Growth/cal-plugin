@@ -100,8 +100,8 @@ Phase advancement requires **explicit approval**: "approved", "advance", "next p
 ## Current Work
 
 <!-- Cal maintains this section. Updated by skills and SessionStart hook. -->
-**Branch:** `cal-5.0`
-**Last commit:** 0c8a33c Merge pull request #13 from Pixley-Growth/feature/dream-friendly-journal
-**Branches:** cal-5.0,feature/agent-escalation,feature/agentic-trends-improvements,feature/dream-friendly-journal,main
+**Branch:** `feature/os27-knowledge`
+**Last commit:** e1087a3 Address Codex P2: soften AppEntity projection to recommendation
+**Branches:** cal-5.0,feature/agent-escalation,feature/agentic-trends-improvements,feature/dream-friendly-journal,feature/os27-knowledge,main
 **Mode:** normal
 **Active:** _No active ticket. Run `/cal:next` to pick up work._
