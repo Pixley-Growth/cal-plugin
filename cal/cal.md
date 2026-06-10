@@ -37,6 +37,8 @@ Auto Dream consolidates entries between sessions — keep entries atomic and top
 
 - **Auto-Journal approach (2026-04-16):** CHOICE: Lean into Claude Code Auto Dream for memory consolidation instead of building Cal-specific journaling. RATIONALE: Prompt-based journaling was inconsistent in past Cal versions. Hook-based is better but native Auto Dream already does the consolidation cycle. REVISIT-IF: Auto Dream proves insufficient for project-level context.
 
+- **Vendor Apple's SwiftUI 27 skill (2026-06-10):** CHOICE: Vendor Apple's `swiftui-whats-new-27` references (Xcode 27 `xcrun agent skills export`) verbatim into `skills/swiftui27/references/`, keep Cal's SDK-verified extras (nav transitions, copy/cut/paste, glass background extension) inline. Apple's text is authoritative on conflict. RATIONALE: Apple-authored guidance beats Cal's reverse-engineered notes for the topics it covers (@State macro source breaks, @ContentBuilder, document model); enrich-not-replace preserves coverage Apple omits. REVISIT-IF: new Xcode 27 betas update the exported skill (re-export and re-vendor), or Anthropic/Apple ship a native distribution channel for these skills.
+
 ---
 
 ## Active Context
