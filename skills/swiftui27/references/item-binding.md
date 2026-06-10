@@ -56,16 +56,14 @@ When the user's deployment target is below SDK 27 and the answer needs a per-ite
 
 ```swift
 @State private var photoToDelete: Photo?
-@State private var isConfirmingDelete = false
 
 var body: some View {
     SomeContent()
-        .modifier(DeleteConfirmation(item: $photoToDelete, isPresented: $isConfirmingDelete))
+        .modifier(DeleteConfirmation(item: $photoToDelete))
 }
 
 private struct DeleteConfirmation: ViewModifier {
     @Binding var item: Photo?
-    @Binding var isPresented: Bool
 
     func body(content: Content) -> some View {
         if #available(iOS 27, *) {
@@ -77,7 +75,10 @@ private struct DeleteConfirmation: ViewModifier {
         } else {
             content.confirmationDialog(
                 "Delete photo?",
-                isPresented: $isPresented,
+                isPresented: Binding(
+                    get: { item != nil },
+                    set: { if !$0 { item = nil } }
+                ),
                 presenting: item
             ) { photo in
                 Button("Delete \(photo.name)", role: .destructive) { /* delete */ }

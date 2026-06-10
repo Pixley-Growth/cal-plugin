@@ -111,5 +111,5 @@ Apple states iOS 27 SwiftUI is more responsive "without code changes" via faster
 
 ## Sourcing
 
-- `references/*.md`: Apple-authored, exported from Xcode 27 via `xcrun agent skills export` (skill `swiftui-whats-new-27`), vendored verbatim 2026-06-10. Re-export and re-vendor on new Xcode 27 betas.
+- `references/*.md`: Apple-authored, exported from Xcode 27 via `xcrun agent skills export` (skill `swiftui-whats-new-27`), vendored 2026-06-10. Two example-code fixes deviate from upstream (caught by Codex on PR #16): `document-based-apps.md` used a nonexistent `fileWrapper:` init label for `NotebookSnapshot.previousFileWrapper`, and `item-binding.md`'s pre-27 fallback never set its `isPresented` flag (now derived from the item binding). Re-export on new Xcode 27 betas and re-check whether upstream fixed these.
 - ✅ items: verified in `iPhoneOS27.0.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-ios.swiftinterface` (Xcode-beta 27.0). Method and traps: see `os27` skill → "Sourcing." Re-grep a symbol's `@available` before relying on it; betas shift.

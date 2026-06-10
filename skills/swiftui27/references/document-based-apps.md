@@ -210,7 +210,7 @@ extension NotebookDocument {
                 firstPage[id] = NotebookPage(text: text)
             }
             return NotebookSnapshot(
-                metadata: metadata, pages: firstPage, fileWrapper: directory
+                metadata: metadata, pages: firstPage, previousFileWrapper: directory
             )
         }
     }
@@ -283,7 +283,7 @@ extension NotebookDocument {
     @MainActor
     func snapshot(contentType: UTType) async throws -> sending NotebookSnapshot {
         let result = NotebookSnapshot(
-            metadata: metadata, pages: pages, fileWrapper: previousFileWrapper
+            metadata: metadata, pages: pages, previousFileWrapper: previousFileWrapper
         )
         // Clear the dirty flags on the document. The snapshot just captured
         // owns those edits now; the writer will persist them, and any further
